@@ -179,8 +179,6 @@ def build_model():
   x = keras.layers.Bidirectional(
     keras.layers.LSTM(64, return_sequences=True, dropout=0.25)
   )(x)
-  # +2 is to account for the two special tokens introduced by the CTC loss.
-  # The recommendation comes here: https://git.10/J0eXP.
   x = keras.layers.Dense(
     len(char_to_num.get_vocabulary()) + 2, activation="softmax", name="dense2"
   )(x)
@@ -207,7 +205,7 @@ model.summary()
 
 custom_objects = {"CTCLayer": CTCLayer}
 
-reconstructed_model = keras.models.load_model("./ocr_model_50_epoch.h5", custom_objects=custom_objects)
+reconstructed_model = keras.models.load_model("./ocr_model_100_epoch.h5", custom_objects=custom_objects)
 prediction_model = keras.models.Model(
   reconstructed_model.get_layer(name="image").input, reconstructed_model.get_layer(name="dense2").output
 )

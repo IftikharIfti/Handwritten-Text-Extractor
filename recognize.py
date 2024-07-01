@@ -74,7 +74,7 @@ class CTCLayer(keras.layers.Layer):
         return y_pred
 
 custom_objects = {"CTCLayer": CTCLayer}
-reconstructed_model = keras.models.load_model("./ocr_model_50_epoch.h5", custom_objects=custom_objects)
+reconstructed_model = keras.models.load_model("./ocr_model_100_epoch.h5", custom_objects=custom_objects)
 prediction_model = keras.models.Model(reconstructed_model.get_layer(name="image").input, reconstructed_model.get_layer(name="dense2").output)
 
 def decode_batch_predictions(pred):
